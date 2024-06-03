@@ -46,7 +46,6 @@ class Ui_MainWindow(object):
         self.toolBar.setObjectName("toolBar")
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionImport_Data = QtWidgets.QAction(MainWindow)
-        self.actionImport_Data.triggered.connect(self.import_data)
         self.actionImport_Data.setObjectName("actionImport_Data")
         self.actionRecent_files = QtWidgets.QAction(MainWindow)
         self.actionRecent_files.setObjectName("actionRecent_files")
@@ -75,30 +74,13 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def import_data(self):
-        # Open a file dialog to select multiple files
-        file_dialog = QtWidgets.QFileDialog()
-        file_paths, _ = file_dialog.getOpenFileNames(None, "Select Files", "", "All Files (*)")
+        self.add_some_items()
 
-        if file_paths:
-            if file_paths:
-                # Add each file to the list widget
-                for file_path in file_paths:
-                    item = QtWidgets.QListWidgetItem(file_path)
-                    widget = QtWidgets.QWidget()
-                    layout = QtWidgets.QHBoxLayout()
-                    widget.setLayout(layout)
-                    layout.addWidget(QtWidgets.QPushButton("Delete", clicked=lambda _, item=item: self.delete_item(item)))
-                    layout.addWidget(QtWidgets.QLabel(file_path))
-                    self.filelist_listWidget.addItem(item)
-                    self.filelist_listWidget.setItemWidget(item, widget)
+    def add_some_items(self):
+        for i in range(3):
+            item = QtWidgets.QListWidgetItem(f"Item {i + 1}")
+            self.filelist_listWidget.addItem(item)
 
-    def delete_item(self, item):
-        row = self.filelist_listWidget.row(item)
-        self.filelist_listWidget.takeItem(row)
-
-    def update_list(self):
-        pass
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

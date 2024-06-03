@@ -81,21 +81,17 @@ class Ui_MainWindow(object):
         file_paths, _ = file_dialog.getOpenFileNames(None, "Select Files", "", "All Files (*)")
 
         if file_paths:
-            if file_paths:
-                # Add each file to the list widget
-                for file_path in file_paths:
-                    item = QtWidgets.QListWidgetItem(file_path)
-                    widget = QtWidgets.QWidget()
-                    layout = QtWidgets.QHBoxLayout()
-                    widget.setLayout(layout)
-                    layout.addWidget(QtWidgets.QPushButton("Delete", clicked=lambda _, item=item: self.delete_item(item)))
-                    layout.addWidget(QtWidgets.QLabel(file_path))
-                    self.filelist_listWidget.addItem(item)
-                    self.filelist_listWidget.setItemWidget(item, widget)
+            # Once files are selected, print their paths
+            print("Selected files:")
+            for file_path in file_paths:
+                print(file_path)
 
-    def delete_item(self, item):
-        row = self.filelist_listWidget.row(item)
-        self.filelist_listWidget.takeItem(row)
+            # Example: Read data from each file using os module
+            for file_path in file_paths:
+                with open(file_path, 'r') as file:
+                    data = file.read()
+                    print("Data from file:", file_path)
+                    #print(data)
 
     def update_list(self):
         pass
