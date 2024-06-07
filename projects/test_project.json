@@ -1,0 +1,35 @@
+{
+    "project_name": "SRDP_500ms.mpt",
+    "preload": {
+        "add_header": false,
+        "add_header_text": "",
+        "skip_rows": true,
+        "skip_rows_number": "65",
+        "find_header": false,
+        "find_header_phrase": "",
+        "defined_in": false,
+        "defined_in_row": "",
+        "defined_in_column": "",
+        "decimal_separator": ".",
+        "delimiter": "Tab"
+    },
+    "variables": [
+                "YEA!",
+                "OOO!",
+                "xDDD"
+    ],
+    "list_data": [
+        {
+            "name": "SRDP_10ms.mpt",
+            "path": "D:/Python/AnJ-lyzer/data_examples/SRDP_10ms.mpt"
+        },
+        {
+            "name": "SRDP_100ms.mpt",
+            "path": "D:/Python/AnJ-lyzer/data_examples/SRDP_100ms.mpt"
+        },
+        {
+            "name": "SRDP_500ms.mpt",
+            "path": "D:/Python/AnJ-lyzer/data_examples/SRDP_500ms.mpt"
+        }
+    ]
+}

@@ -7,937 +7,2113 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>800</height>
+    <height>880</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>880</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QListWidget" name="filelist_listWidget">
-    <property name="geometry">
-     <rect>
-      <x>600</x>
-      <y>9</y>
-      <width>390</width>
-      <height>520</height>
-     </rect>
-    </property>
-    <property name="dragDropMode">
-     <enum>QAbstractItemView::DragDrop</enum>
-    </property>
-    <property name="spacing">
-     <number>0</number>
-    </property>
-   </widget>
-   <widget class="QListView" name="terminal_listView">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>540</y>
-      <width>981</width>
-      <height>180</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QTabWidget" name="tabWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>400</y>
-      <width>580</width>
-      <height>130</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <property name="usesScrollButtons">
-     <bool>false</bool>
-    </property>
-    <property name="documentMode">
-     <bool>false</bool>
-    </property>
-    <property name="tabsClosable">
-     <bool>false</bool>
-    </property>
-    <property name="movable">
-     <bool>false</bool>
-    </property>
-    <property name="tabBarAutoHide">
-     <bool>false</bool>
-    </property>
-    <widget class="QWidget" name="plot2D_tab">
-     <attribute name="title">
-      <string>Plot 2D XY</string>
-     </attribute>
-     <widget class="QPushButton" name="plot_marked_pushButton_4">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>55</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
+   <property name="minimumSize">
+    <size>
+     <width>1000</width>
+     <height>840</height>
+    </size>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="main_horizontalLayout" stretch="6,5">
+      <property name="spacing">
+       <number>3</number>
       </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Plot marked</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="plot_selected_pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Plot selected</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Ymin_textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>40</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_7">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>X</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Xmin_textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>10</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_8">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_8">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Ymax_textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>40</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_9">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Xmax_textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>10</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_9">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="Y_comboBox_4">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>40</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="X_comboBox_3">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>10</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_10">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Y</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="autoXYZ_pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>30</width>
-        <height>85</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <stylestrategy>PreferDefault</stylestrategy>
-       </font>
-      </property>
-      <property name="text">
-       <string>A
+      <item>
+       <layout class="QVBoxLayout" name="left_verticalLayout" stretch="3,6,3,4">
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>3</number>
+        </property>
+        <property name="rightMargin">
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>3</number>
+        </property>
+        <item>
+         <widget class="QGroupBox" name="info_groupBox">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>151</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="title">
+           <string>Info</string>
+          </property>
+          <widget class="QPushButton" name="saveProject_pushButton">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>80</y>
+             <width>75</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Save</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="saveAsProject_pushButton">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>110</y>
+             <width>75</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Save As...</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="projectName_lineEdit">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>20</y>
+             <width>270</width>
+             <height>30</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="project_label">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>20</y>
+             <width>51</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Project</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="openProject_pushButton">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>50</y>
+             <width>75</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Open</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="newProject_pushButton">
+           <property name="geometry">
+            <rect>
+             <x>440</x>
+             <y>20</y>
+             <width>75</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>New</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="file_label">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>60</y>
+             <width>41</width>
+             <height>25</height>
+            </rect>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>File</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QTextBrowser" name="fileName_textBrowser">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>60</y>
+             <width>271</width>
+             <height>30</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QTextBrowser" name="fileSize_textBrowser">
+           <property name="geometry">
+            <rect>
+             <x>360</x>
+             <y>60</y>
+             <width>70</width>
+             <height>30</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QTextBrowser" name="projectSize_textBrowser">
+           <property name="geometry">
+            <rect>
+             <x>360</x>
+             <y>20</y>
+             <width>70</width>
+             <height>30</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="operations_tabWidget">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>302</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="usesScrollButtons">
+           <bool>false</bool>
+          </property>
+          <property name="documentMode">
+           <bool>false</bool>
+          </property>
+          <property name="tabsClosable">
+           <bool>false</bool>
+          </property>
+          <property name="movable">
+           <bool>false</bool>
+          </property>
+          <property name="tabBarAutoHide">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="importOptions_tab">
+           <attribute name="title">
+            <string>Import options</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="importOptions_verticalLayout" stretch="1,4">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QWidget" name="importOptionsUp_widget" native="true">
+                <widget class="QPushButton" name="loadPreload_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>315</x>
+                   <y>10</y>
+                   <width>95</width>
+                   <height>30</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Load preload</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="reloadData_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>205</x>
+                   <y>10</y>
+                   <width>95</width>
+                   <height>30</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Reload data</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="savePreload_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>415</x>
+                   <y>10</y>
+                   <width>95</width>
+                   <height>30</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Save preload</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="importRawData_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>5</x>
+                   <y>10</y>
+                   <width>95</width>
+                   <height>30</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Import raw</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="previewHeader_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>105</x>
+                   <y>10</y>
+                   <width>95</width>
+                   <height>30</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Preview</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="importOptions_horizontalLayout">
+                <item>
+                 <widget class="QWidget" name="importOptionsDown_widget" native="true">
+                  <layout class="QGridLayout" name="gridLayout_2">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <item row="0" column="0">
+                    <layout class="QHBoxLayout" name="importOptionsDown_horizontalLayout" stretch="7,4">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QWidget" name="widget" native="true">
+                       <property name="maximumSize">
+                        <size>
+                         <width>328</width>
+                         <height>16777215</height>
+                        </size>
+                       </property>
+                       <widget class="QTextEdit" name="addHeader_textEdit">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>170</y>
+                          <width>211</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                       <widget class="QTextEdit" name="skipNRows_textEdit">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>50</y>
+                          <width>50</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="rowDefinedIn_file_label">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>130</y>
+                          <width>50</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Row</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                       <widget class="QTextEdit" name="rowDefinedIn_textEdit">
+                        <property name="geometry">
+                         <rect>
+                          <x>159</x>
+                          <y>130</y>
+                          <width>50</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="delimiter_file_label">
+                        <property name="geometry">
+                         <rect>
+                          <x>175</x>
+                          <y>10</y>
+                          <width>70</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Delimiter</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                       <widget class="QCheckBox" name="addHeader_checkBox">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>170</y>
+                          <width>100</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>add header</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="columnDefinedIn_file_label">
+                        <property name="geometry">
+                         <rect>
+                          <x>220</x>
+                          <y>130</y>
+                          <width>50</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Column</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                       <widget class="QComboBox" name="delimiter_comboBox">
+                        <property name="geometry">
+                         <rect>
+                          <x>240</x>
+                          <y>10</y>
+                          <width>80</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="editable">
+                         <bool>true</bool>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>Tab</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Semicolon</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Comma</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Space</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Other...</string>
+                         </property>
+                        </item>
+                       </widget>
+                       <widget class="QCheckBox" name="skipNRows_checkBox">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>50</y>
+                          <width>100</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>skip n rows</string>
+                        </property>
+                       </widget>
+                       <widget class="QLabel" name="decimalSeparator_file_label">
+                        <property name="geometry">
+                         <rect>
+                          <x>175</x>
+                          <y>50</y>
+                          <width>120</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>Dec. separator</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                        </property>
+                       </widget>
+                       <widget class="QCheckBox" name="findHeader_checkBox">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>90</y>
+                          <width>100</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>find header</string>
+                        </property>
+                       </widget>
+                       <widget class="QCheckBox" name="definedIn_checkBox">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>130</y>
+                          <width>100</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>defined in...</string>
+                        </property>
+                       </widget>
+                       <widget class="QTextEdit" name="columnDefinedIn_textEdit">
+                        <property name="geometry">
+                         <rect>
+                          <x>270</x>
+                          <y>130</y>
+                          <width>50</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                       <widget class="QTextEdit" name="decimalSeparator_textEdit">
+                        <property name="geometry">
+                         <rect>
+                          <x>290</x>
+                          <y>50</y>
+                          <width>30</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="layoutDirection">
+                         <enum>Qt::RightToLeft</enum>
+                        </property>
+                        <property name="html">
+                         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                        </property>
+                       </widget>
+                       <widget class="QTextEdit" name="findHeader_textEdit">
+                        <property name="geometry">
+                         <rect>
+                          <x>110</x>
+                          <y>90</y>
+                          <width>210</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                       </widget>
+                       <widget class="QCheckBox" name="reloadAutomatically_checkBox">
+                        <property name="geometry">
+                         <rect>
+                          <x>10</x>
+                          <y>10</y>
+                          <width>151</width>
+                          <height>30</height>
+                         </rect>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <pointsize>10</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>reload automatically</string>
+                        </property>
+                       </widget>
+                      </widget>
+                     </item>
+                     <item>
+                      <layout class="QVBoxLayout" name="importOptionsDownRight_verticalLayout" stretch="1,3">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="QWidget" name="variables_widget" native="true">
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>50</height>
+                          </size>
+                         </property>
+                         <widget class="QPushButton" name="removeVariables_pushButton_2">
+                          <property name="geometry">
+                           <rect>
+                            <x>135</x>
+                            <y>10</y>
+                            <width>45</width>
+                            <height>30</height>
+                           </rect>
+                          </property>
+                          <property name="text">
+                           <string>Rm</string>
+                          </property>
+                         </widget>
+                         <widget class="QLabel" name="variables_file_label">
+                          <property name="geometry">
+                           <rect>
+                            <x>10</x>
+                            <y>10</y>
+                            <width>70</width>
+                            <height>30</height>
+                           </rect>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <pointsize>10</pointsize>
+                           </font>
+                          </property>
+                          <property name="text">
+                           <string>Variables</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                          </property>
+                         </widget>
+                         <widget class="QPushButton" name="OkVariables_pushButton">
+                          <property name="geometry">
+                           <rect>
+                            <x>85</x>
+                            <y>10</y>
+                            <width>45</width>
+                            <height>30</height>
+                           </rect>
+                          </property>
+                          <property name="text">
+                           <string>OK</string>
+                          </property>
+                         </widget>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QListWidget" name="variables_listWidget">
+                         <property name="dragDropMode">
+                          <enum>QAbstractItemView::InternalMove</enum>
+                         </property>
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="operations_tab">
+           <attribute name="title">
+            <string>Operations</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="operationsTab_horizontalLayout" stretch="1,3">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QWidget" name="operationsButtons_widget" native="true">
+                <property name="maximumSize">
+                 <size>
+                  <width>110</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <widget class="QPushButton" name="addOperation_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>10</y>
+                   <width>90</width>
+                   <height>40</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>ADD -&gt;</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="goSelected_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>55</y>
+                   <width>90</width>
+                   <height>40</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Go selected!</string>
+                 </property>
+                </widget>
+                <widget class="QPushButton" name="goMarked_pushButton">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>100</y>
+                   <width>90</width>
+                   <height>40</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>10</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Go marked!</string>
+                 </property>
+                </widget>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="operations_frame">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTabWidget" name="plotting_tabWidget">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>151</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="usesScrollButtons">
+           <bool>false</bool>
+          </property>
+          <property name="documentMode">
+           <bool>false</bool>
+          </property>
+          <property name="tabsClosable">
+           <bool>false</bool>
+          </property>
+          <property name="movable">
+           <bool>false</bool>
+          </property>
+          <property name="tabBarAutoHide">
+           <bool>false</bool>
+          </property>
+          <widget class="QWidget" name="plot2DXY_tab">
+           <attribute name="title">
+            <string>Plot 2D XY</string>
+           </attribute>
+           <widget class="QPushButton" name="plotMarked2DXY_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>55</y>
+              <width>100</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plot marked</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="plotSelected2DXY_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>100</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plot selected</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Ymin2DXY_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>40</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="X2DXY_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>X</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Xmin2DXY_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>10</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Xmax2DXY_label">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Ymax2DXY_label">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Ymax2DXY_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>40</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Xmin2DXY_label">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Xmax2DXY_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>10</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Ymin2DXY_label">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="Y2DXY_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>40</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="X2DXY_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>10</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Y2DXY_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="auto2DXY_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>480</x>
+              <y>10</y>
+              <width>30</width>
+              <height>85</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <stylestrategy>PreferDefault</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>A
 U
 T
 O</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab">
-     <attribute name="title">
-      <string>Plot 2D XYZ</string>
-     </attribute>
-     <widget class="QComboBox" name="X_comboBox_1">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>10</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="plot_marked_pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>55</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Plot marked</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="plot_selected_pushButton_1">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Plot selected</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="Y_comboBox_2">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>40</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_1">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>X</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_2">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Y</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Z_3">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>70</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Z</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="Z_comboBox_3">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>70</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_3">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_2">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Z_4">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>70</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Xmin_textEdit">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>10</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Ymin_textEdit">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>40</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Zmin_textEdit">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>70</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_4">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_3">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Z_5">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>70</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Ymax_textEdit">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>40</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Xmax_textEdit">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>10</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Zmax_textEdit">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>70</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="autoXYZ_pushButton">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>30</width>
-        <height>85</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <stylestrategy>PreferDefault</stylestrategy>
-       </font>
-      </property>
-      <property name="text">
-       <string>A
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="plot2DXYZ_tab">
+           <attribute name="title">
+            <string>Plot 2D XYZ</string>
+           </attribute>
+           <widget class="QComboBox" name="X2DXYZ_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>10</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="plotMarked_2DXYZ_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>55</y>
+              <width>100</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plot marked</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="plotSelected_2DYXZ_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>100</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plot selected</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="Y2DXYZ_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>40</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="X2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>X</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Y2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Z2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>70</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Z</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="Z2DXYZ_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>70</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Ymin2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Xmin2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Zmin2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>70</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Xmin2DXYZ_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>10</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Ymin2DXYZ_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>40</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Zmin2DXYZ_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>70</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Ymax2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Xmax2DXYZ_label">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Ymax2DXYZ_label_2">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>70</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Ymax2DXYZ_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>40</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Xmax2DXYZ_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>10</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Zmax2DXYZ_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>70</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="auto2DXYZ_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>480</x>
+              <y>10</y>
+              <width>30</width>
+              <height>85</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <stylestrategy>PreferDefault</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>A
 U
 T
 O</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="plot3D_tab">
-     <attribute name="title">
-      <string>Plot 3D</string>
-     </attribute>
-     <widget class="QTextEdit" name="Ymin_textEdit_4">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>40</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_10">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>X</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="plot_selected_pushButton_5">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Plot selected</string>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="Z_comboBox_5">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>70</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Xmin_textEdit_4">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>10</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Zmax_textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>70</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_11">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_11">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Ymax_textEdit_4">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>40</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Z_9">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>70</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_X_12">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>10</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Xmax_textEdit_4">
-      <property name="geometry">
-       <rect>
-        <x>455</x>
-        <y>10</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_12">
-      <property name="geometry">
-       <rect>
-        <x>315</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>min</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Z_10">
-      <property name="geometry">
-       <rect>
-        <x>425</x>
-        <y>70</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>max</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="Zmin_textEdit_3">
-      <property name="geometry">
-       <rect>
-        <x>345</x>
-        <y>70</y>
-        <width>70</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="Y_comboBox_5">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>40</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="X_comboBox_4">
-      <property name="geometry">
-       <rect>
-        <x>145</x>
-        <y>10</y>
-        <width>160</width>
-        <height>25</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Z_11">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>70</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Z</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="plot_marked_pushButton_7">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>55</y>
-        <width>100</width>
-        <height>40</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Plot marked</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_Y_13">
-      <property name="geometry">
-       <rect>
-        <x>125</x>
-        <y>40</y>
-        <width>25</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Y</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="autoXYZ_pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>30</width>
-        <height>85</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <pointsize>10</pointsize>
-        <stylestrategy>PreferDefault</stylestrategy>
-       </font>
-      </property>
-      <property name="text">
-       <string>A
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="plot3D_tab">
+           <attribute name="title">
+            <string>Plot 3D</string>
+           </attribute>
+           <widget class="QTextEdit" name="Ymin3D_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>40</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="X3D_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>X</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="plotSelected3D_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>10</y>
+              <width>100</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plot selected</string>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="Z3D_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>70</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Xmin3D_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>10</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Zmax3D_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>70</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_X_11">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_Y_11">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Ymax3D_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>40</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_Z_9">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>70</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_X_12">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>10</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Xmax3D_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>405</x>
+              <y>10</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_Y_12">
+            <property name="geometry">
+             <rect>
+              <x>275</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>min</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="label_Z_10">
+            <property name="geometry">
+             <rect>
+              <x>375</x>
+              <y>70</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>max</string>
+            </property>
+           </widget>
+           <widget class="QTextEdit" name="Zmin3D_textEdit">
+            <property name="geometry">
+             <rect>
+              <x>305</x>
+              <y>70</y>
+              <width>60</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="Y3D_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>40</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QComboBox" name="X3D_comboBox">
+            <property name="geometry">
+             <rect>
+              <x>145</x>
+              <y>10</y>
+              <width>120</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Z3D_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>70</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Z</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="plotMarked3D_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>55</y>
+              <width>100</width>
+              <height>40</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plot marked</string>
+            </property>
+           </widget>
+           <widget class="QLabel" name="Y3D_label">
+            <property name="geometry">
+             <rect>
+              <x>125</x>
+              <y>40</y>
+              <width>25</width>
+              <height>25</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Y</string>
+            </property>
+           </widget>
+           <widget class="QPushButton" name="auto3D_pushButton">
+            <property name="geometry">
+             <rect>
+              <x>480</x>
+              <y>10</y>
+              <width>30</width>
+              <height>85</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+              <stylestrategy>PreferDefault</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>A
 U
 T
 O</string>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
-   </widget>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListView" name="preview_listView">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="right_verticalLayout" stretch="3,1">
+        <property name="spacing">
+         <number>9</number>
+        </property>
+        <property name="leftMargin">
+         <number>3</number>
+        </property>
+        <property name="topMargin">
+         <number>3</number>
+        </property>
+        <property name="rightMargin">
+         <number>3</number>
+        </property>
+        <property name="bottomMargin">
+         <number>3</number>
+        </property>
+        <item>
+         <layout class="QHBoxLayout" name="right_sub_horizontalLayout" stretch="10,0">
+          <item>
+           <widget class="QListWidget" name="filelist_listWidget">
+            <property name="dragDropMode">
+             <enum>QAbstractItemView::InternalMove</enum>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <widget class="QPushButton" name="clearAll_pushButton">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>240</y>
+               <width>60</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>All</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="inverseMark_pushButton">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>80</y>
+               <width>60</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>I</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="clearMarked_pushButton">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>200</y>
+               <width>60</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Marked</string>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="clearSelected_pushButton">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>160</y>
+               <width>60</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Selected</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="mark_label">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>15</y>
+               <width>60</width>
+               <height>20</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>(Un)Mark</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="markAll_pushButton">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>40</y>
+               <width>60</width>
+               <height>35</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>A</string>
+             </property>
+            </widget>
+            <widget class="QLabel" name="clear_label">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>130</y>
+               <width>60</width>
+               <height>20</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Clear</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QListView" name="terminal_listView"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -952,17 +2128,37 @@ O</string>
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionImport_Data"/>
-    <addaction name="actionRecent_files"/>
+    <addaction name="action_ImportData"/>
+    <addaction name="action_Recentfiles"/>
     <addaction name="separator"/>
-    <addaction name="actionSave_project"/>
-    <addaction name="actionSave_project_as"/>
-    <addaction name="actionExport"/>
+    <addaction name="action_SaveProject"/>
+    <addaction name="action_SaveProjectAs"/>
+    <addaction name="action_Export"/>
     <addaction name="separator"/>
-    <addaction name="actionClose"/>
-    <addaction name="actionExit"/>
+    <addaction name="action_Close"/>
+    <addaction name="action_Exit"/>
+   </widget>
+   <widget class="QMenu" name="menuOperations">
+    <property name="title">
+     <string>Operations</string>
+    </property>
+    <widget class="QMenu" name="menu_AddOperation">
+     <property name="title">
+      <string>Add operation</string>
+     </property>
+     <widget class="QMenu" name="menu_AddOperation_filters">
+      <property name="title">
+       <string>filters</string>
+      </property>
+      <addaction name="action_AddOperation_filter_byValue"/>
+     </widget>
+     <addaction name="menu_AddOperation_filters"/>
+     <addaction name="actionassigners"/>
+    </widget>
+    <addaction name="menu_AddOperation"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuOperations"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -975,41 +2171,51 @@ O</string>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionImport_Data"/>
+   <addaction name="action_ImportData"/>
   </widget>
-  <action name="actionImport_Data">
+  <action name="action_ImportData">
    <property name="text">
     <string>Import Data</string>
    </property>
   </action>
-  <action name="actionRecent_files">
+  <action name="action_Recentfiles">
    <property name="text">
     <string>Recent files</string>
    </property>
   </action>
-  <action name="actionSave_project">
+  <action name="action_SaveProject">
    <property name="text">
     <string>Save project</string>
    </property>
   </action>
-  <action name="actionSave_project_as">
+  <action name="action_SaveProjectAs">
    <property name="text">
     <string>Save project as...</string>
    </property>
   </action>
-  <action name="actionExport">
+  <action name="action_Export">
    <property name="text">
     <string>Export...</string>
    </property>
   </action>
-  <action name="actionClose">
+  <action name="action_Close">
    <property name="text">
     <string>Close</string>
    </property>
   </action>
-  <action name="actionExit">
+  <action name="action_Exit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionassigners">
+   <property name="text">
+    <string>assigners</string>
+   </property>
+  </action>
+  <action name="action_AddOperation_filter_byValue">
+   <property name="text">
+    <string>...by value</string>
    </property>
   </action>
  </widget>
