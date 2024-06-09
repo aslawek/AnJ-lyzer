@@ -9,7 +9,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pandas as pd
-import json
+import os
 import pickle
 
 class Ui_MainWindow(object):
@@ -36,10 +36,12 @@ class Ui_MainWindow(object):
         self.info_groupBox.setFont(font)
         self.info_groupBox.setObjectName("info_groupBox")
         self.saveProject_pushButton = QtWidgets.QPushButton(self.info_groupBox)
+        self.saveProject_pushButton.clicked.connect(self.save_project)
         self.saveProject_pushButton.clicked.connect(self.save_test_project)
         self.saveProject_pushButton.setGeometry(QtCore.QRect(440, 80, 75, 25))
         self.saveProject_pushButton.setObjectName("saveProject_pushButton")
         self.saveAsProject_pushButton = QtWidgets.QPushButton(self.info_groupBox)
+        self.saveAsProject_pushButton.clicked.connect(self.save_project_as)
         self.saveAsProject_pushButton.setGeometry(QtCore.QRect(440, 110, 75, 25))
         self.saveAsProject_pushButton.setObjectName("saveAsProject_pushButton")
         self.projectName_lineEdit = QtWidgets.QLineEdit(self.info_groupBox)
@@ -53,9 +55,11 @@ class Ui_MainWindow(object):
         self.project_label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.project_label.setObjectName("project_label")
         self.openProject_pushButton = QtWidgets.QPushButton(self.info_groupBox)
+        self.openProject_pushButton.clicked.connect(self.open_project)
         self.openProject_pushButton.setGeometry(QtCore.QRect(440, 50, 75, 25))
         self.openProject_pushButton.setObjectName("openProject_pushButton")
         self.newProject_pushButton = QtWidgets.QPushButton(self.info_groupBox)
+        self.newProject_pushButton.clicked.connect(self.new_project)
         self.newProject_pushButton.setGeometry(QtCore.QRect(440, 20, 75, 25))
         self.newProject_pushButton.setObjectName("newProject_pushButton")
         self.file_label = QtWidgets.QLabel(self.info_groupBox)
@@ -118,6 +122,7 @@ class Ui_MainWindow(object):
         self.savePreload_pushButton.setFont(font)
         self.savePreload_pushButton.setObjectName("savePreload_pushButton")
         self.importRawData_pushButton = QtWidgets.QPushButton(self.importOptionsUp_widget)
+        self.importRawData_pushButton.clicked.connect(self.import_raw_data)
         self.importRawData_pushButton.setGeometry(QtCore.QRect(5, 10, 95, 30))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -725,24 +730,28 @@ class Ui_MainWindow(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.clearAll_pushButton = QtWidgets.QPushButton(self.frame)
+        self.clearAll_pushButton.clicked.connect(self.clear_all_fileList)
         self.clearAll_pushButton.setGeometry(QtCore.QRect(10, 240, 60, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.clearAll_pushButton.setFont(font)
         self.clearAll_pushButton.setObjectName("clearAll_pushButton")
         self.inverseMark_pushButton = QtWidgets.QPushButton(self.frame)
+        self.inverseMark_pushButton.clicked.connect(self.inverse_mark_fileList)
         self.inverseMark_pushButton.setGeometry(QtCore.QRect(10, 80, 60, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.inverseMark_pushButton.setFont(font)
         self.inverseMark_pushButton.setObjectName("inverseMark_pushButton")
         self.clearMarked_pushButton = QtWidgets.QPushButton(self.frame)
+        self.clearMarked_pushButton.clicked.connect(self.clear_marked_fileList)
         self.clearMarked_pushButton.setGeometry(QtCore.QRect(10, 200, 60, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.clearMarked_pushButton.setFont(font)
         self.clearMarked_pushButton.setObjectName("clearMarked_pushButton")
         self.clearSelected_pushButton = QtWidgets.QPushButton(self.frame)
+        self.clearSelected_pushButton.clicked.connect(self.clear_selected_fileList)
         self.clearSelected_pushButton.setGeometry(QtCore.QRect(10, 160, 60, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -756,6 +765,7 @@ class Ui_MainWindow(object):
         self.mark_label.setAlignment(QtCore.Qt.AlignCenter)
         self.mark_label.setObjectName("mark_label")
         self.markAll_pushButton = QtWidgets.QPushButton(self.frame)
+        self.markAll_pushButton.clicked.connect(self.mark_all_fileList)
         self.markAll_pushButton.setGeometry(QtCore.QRect(10, 40, 60, 35))
         font = QtGui.QFont()
         font.setPointSize(10)
@@ -856,21 +866,103 @@ class Ui_MainWindow(object):
             self.current_project = pickle.load(file)
 
         print(self.current_project['preload'])
+        #self.update_import_options()
 
     def save_test_project(self):
         with open('projects/xxx.pkl', 'wb') as f:
             pickle.dump(self.current_project, f)
 
+    def new_project(self):
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        file_name, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Create New Project", "projects",
+                                                   "Project Files (*.pkl);;All Files (*)", options=options)
+        if file_name:
+            # Get project name from path
+            project_name = os.path.splitext(os.path.basename(file_name))[0]
+            # Append ".pkl" extension if not already present
+            if not file_name.endswith(".pkl"):
+                file_name += ".pkl"
+            # A dict containing empty project
+            self.current_project = {
+                "project_name": project_name,
+                "project_path": file_name,
+                "preload": {
+                    "reload_automatically": False,
+                    "skip_rows": False,
+                    "skip_rows_number": "",
+                    "find_header": False,
+                    "find_header_phrase": "",
+                    "defined_in": False,
+                    "defined_in_row": "",
+                    "defined_in_column": "",
+                    "add_header": False,
+                    "add_header_text": "",
+                    "decimal_separator": ".",
+                    "delimiter": "Tab"
+                },
+                "list_variables": [],
+                "list_data": []
+            }
+            # Process the selected file_name
+            print("New project file created:", file_name)
+            # Save data as pickle
+            with open(file_name, 'wb') as file:
+                pickle.dump(self.current_project, file)
+            print("Data saved as pickle.")
+            self.update_preload_options()
+            self.projectName_lineEdit.setText(self.current_project["project_name"])
+            self.projectSize_textBrowser.setText(self.get_size(self.current_project))
+            print(self.current_project)
+
     def save_project(self):
-        pass
+        # gets preload options and updates current project dict
+        self.preload_options_to_current_data()
+        # Save data as pickle
+        with open(self.current_project["project_path"], 'wb') as file:
+            pickle.dump(self.current_project, file)
+        print("Data saved as pickle.")
+        self.update_preload_options()
+        self.projectSize_textBrowser.setText(self.get_size(self.current_project))
 
     def save_project_as(self):
-        pass
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        file_name, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save Project As...", "projects",
+                                                             "Project Files (*.pkl);;All Files (*)", options=options)
+        if file_name:
+            self.preload_options_to_current_data()
+            # Append ".pkl" extension if not already present
+            if not file_name.endswith(".pkl"):
+                file_name += ".pkl"
+            # Process the selected file_name
+            print("New project file created:", file_name)
+            # Save data as pickle
+            with open(file_name, 'wb') as file:
+                pickle.dump(self.current_project, file)
+            print("Data saved as pickle.")
+            self.update_preload_options()
+            print(self.current_project)
 
     def open_project(self):
-        print(self.current_project)
+        default_project_path = os.path.join(os.path.dirname(__file__), "projects")
+        options = QtWidgets.QFileDialog.Options()
+        options |= QtWidgets.QFileDialog.DontUseNativeDialog
+        file_name, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Open Project", default_project_path, "Project Files (*.pkl)", options=options)
+        if file_name:
+            # Process the selected file_name
+            print("Opening project file:", file_name)
 
-    def import_data(self):
+            # Load data from the .pkl file
+            with open(file_name, 'rb') as file:
+                self.current_project = pickle.load(file)
+
+            # Process the loaded data (e.g., display, analyze, etc.)
+            print(f'Data loaded from project: {self.current_project["project_name"]}')
+            self.projectSize_textBrowser.setText(self.get_size(self.current_project))
+            self.update_preload_options()
+
+    def import_raw_data(self):
         # Open a file dialog to select multiple files
         file_dialog = QtWidgets.QFileDialog()
         file_paths, _ = file_dialog.getOpenFileNames(None, "Select Files", "", "All Files (*)")
@@ -883,7 +975,8 @@ class Ui_MainWindow(object):
                     item.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
                     item.setCheckState(QtCore.Qt.Unchecked)
                     self.filelist_listWidget.addItem(item)
-                    self.data_loader(file_path)
+                    #self.current_project["list_data"].append("{}: {}".format("", ))
+                    #self.data_loader(file_path)
 
     def updata_filelist(self):
         file_paths = self.current_project["list_data"]['path']
@@ -916,7 +1009,7 @@ class Ui_MainWindow(object):
             preload = pickle.load(file)
             self.current_project["preload"] = preload
         print(self.current_project['preload'])
-        self.update_import_options()
+        self.update_preload_options()
 
     def save_preload(self):
         # Gets the preload values from import options window
@@ -944,7 +1037,7 @@ class Ui_MainWindow(object):
             with open(file_path, 'wb') as f:
                 pickle.dump(preload, f)
 
-    def update_import_options(self):
+    def update_preload_options(self):
         self.reloadAutomatically_checkBox.setChecked(self.current_project["preload"]["reload_automatically"])
         self.skipNRows_checkBox.setChecked(self.current_project["preload"]["skip_rows"])
         self.skipNRows_textEdit.setText(str(self.current_project["preload"]["skip_rows_number"]))
@@ -958,18 +1051,46 @@ class Ui_MainWindow(object):
         self.decimalSeparator_textEdit.setText(str(self.current_project["preload"]["decimal_separator"]))
         self.delimiter_comboBox.setCurrentText(str(self.current_project["preload"]["delimiter"]))
 
-    # Functions for Mark buttons (all/none/inverse)
-    def markAll_fileList(self):
+    def preload_options_to_current_data(self):
+        preload = {
+            "reload_automatically": self.reloadAutomatically_checkBox.isChecked(),
+            "skip_rows": self.skipNRows_checkBox.isChecked(),
+            "skip_rows_number": self.skipNRows_textEdit.toPlainText(),
+            "find_header": self.findHeader_checkBox.isChecked(),
+            "find_header_phrase": self.findHeader_textEdit.toPlainText(),
+            "defined_in": self.definedIn_checkBox.isChecked(),
+            "defined_in_row": self.rowDefinedIn_textEdit.toPlainText(),
+            "defined_in_column": self.columnDefinedIn_textEdit.toPlainText(),
+            "add_header": self.addHeader_checkBox.isChecked(),
+            "add_header_text": self.addHeader_textEdit.toPlainText(),
+            "decimal_separator": self.decimalSeparator_textEdit.toPlainText(),
+            "delimiter": self.delimiter_comboBox.currentText()
+        }
+        self.current_project["preload"] = preload
+
+    # Functions for Mark buttons (all/none/inverse)designer
+    def XXXmarkAll_fileList(self):
         for index in range(self.filelist_listWidget.count()):
             item = self.filelist_listWidget.item(index)
             item.setCheckState(QtCore.Qt.Checked)
 
-    def unmarkAll_fileList(self):
+    def mark_all_fileList(self):
+        all_checked = True
         for index in range(self.filelist_listWidget.count()):
             item = self.filelist_listWidget.item(index)
-            item.setCheckState(QtCore.Qt.Unchecked)
+            if item.checkState() != QtCore.Qt.Checked:
+                all_checked = False
+                break
+        if all_checked:
+            for index in range(self.filelist_listWidget.count()):
+                item = self.filelist_listWidget.item(index)
+                item.setCheckState(QtCore.Qt.Unchecked)
+        else:
+            for index in range(self.filelist_listWidget.count()):
+                item = self.filelist_listWidget.item(index)
+                item.setCheckState(QtCore.Qt.Checked)
 
-    def inverseMark_fileList(self):
+    def inverse_mark_fileList(self):
         for index in range(self.filelist_listWidget.count()):
             item = self.filelist_listWidget.item(index)
             current_state = item.checkState()
@@ -980,12 +1101,12 @@ class Ui_MainWindow(object):
 
         # Functions for Clear buttons (selected/marked/all)
 
-    def clearSelected_fileList(self):
+    def clear_selected_fileList(self):
         selected_item = self.filelist_listWidget.currentItem()
         if selected_item:
             self.filelist_listWidget.takeItem(self.filelist_listWidget.row(selected_item))
 
-    def clearMarked_fileList(self):
+    def clear_marked_fileList(self):
         checked_items = []
         for index in range(self.filelist_listWidget.count()):
             item = self.filelist_listWidget.item(index)
@@ -994,8 +1115,22 @@ class Ui_MainWindow(object):
         for item in checked_items:
             self.filelist_listWidget.takeItem(self.filelist_listWidget.row(item))
 
-    def clearAll_fileList(self):
+    def clear_all_fileList(self):
         self.filelist_listWidget.clear()
+
+    def get_size(self, dict):
+        size = len(dict)
+        size_bytes = size * 8
+        print(f'File size is: {size_bytes} B')
+        # Define suffixes for different sizes
+        suffixes = ['B', 'kB', 'MB', 'GB', 'TB']
+        # Find the appropriate suffix
+        suffix_index = 0
+        while size_bytes >= 1024 and suffix_index < len(suffixes) - 1:
+            size_bytes /= 1024
+            suffix_index += 1
+        # Return the size with the appropriate suffix
+        return "{:.2f} {}".format(size_bytes, suffixes[suffix_index])
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
