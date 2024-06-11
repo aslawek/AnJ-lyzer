@@ -28,12 +28,12 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="main_horizontalLayout" stretch="6,5">
+     <layout class="QHBoxLayout" name="main_horizontalLayout" stretch="0,5">
       <property name="spacing">
        <number>3</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="left_verticalLayout" stretch="3,6,3,4">
+       <layout class="QVBoxLayout" name="left_verticalLayout" stretch="3,6,3,1">
         <property name="spacing">
          <number>3</number>
         </property>
@@ -51,9 +51,15 @@
         </property>
         <item>
          <widget class="QGroupBox" name="info_groupBox">
+          <property name="minimumSize">
+           <size>
+            <width>527</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
+            <width>9999</width>
             <height>151</height>
            </size>
           </property>
@@ -205,7 +211,7 @@
          <widget class="QTabWidget" name="operations_tabWidget">
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
+            <width>527</width>
             <height>302</height>
            </size>
           </property>
@@ -897,7 +903,7 @@ p, li { white-space: pre-wrap; }
          <widget class="QTabWidget" name="plotting_tabWidget">
           <property name="maximumSize">
            <size>
-            <width>16777215</width>
+            <width>527</width>
             <height>151</height>
            </size>
           </property>
@@ -1917,18 +1923,19 @@ O</string>
          </widget>
         </item>
         <item>
-         <widget class="QListView" name="preview_listView">
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
+         <widget class="QTextBrowser" name="terminal_textBrowser_2">
+          <property name="maximumSize">
+           <size>
+            <width>527</width>
+            <height>16777215</height>
+           </size>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="right_verticalLayout" stretch="3,1">
+       <layout class="QVBoxLayout" name="right_verticalLayout" stretch="3,3">
         <property name="spacing">
          <number>9</number>
         </property>
@@ -2107,7 +2114,7 @@ O</string>
          </layout>
         </item>
         <item>
-         <widget class="QListView" name="terminal_listView"/>
+         <widget class="QTextBrowser" name="preview_textBrowser"/>
         </item>
        </layout>
       </item>
