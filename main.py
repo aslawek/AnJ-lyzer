@@ -1,11 +1,15 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.uic import loadUi
+import pandas as pd
+import matplotlib
+import matplotlib.pyplot as plt
 import sys
 import os
 from io import StringIO
-import pandas as pd
 import pickle
 from datetime import datetime
+#matplotlib.use('TkAgg')
+#matplotlib.use('Qt5Agg')
 
 class MainUI(QtWidgets.QMainWindow):
     def __init__(self):
@@ -26,14 +30,26 @@ class MainUI(QtWidgets.QMainWindow):
         self.markAll_pushButton.clicked.connect(self.mark_all_fileList)
         self.filelist_listWidget.itemSelectionChanged.connect(self.handle_filelist_item_selection)
         self.previewHeader_pushButton.clicked.connect(self.data_preview)
+        self.okVariables_pushButton.clicked.connect(self.ok_variables)
+        self.removeVariables_pushButton.clicked.connect(self.rm_variables)
+
+        # To handle that only one checkbox is checked
+        self.skipNRows_checkBox.stateChanged.connect(self.handle_checkboxes_for_import_options)
+        self.definedIn_checkBox.stateChanged.connect(self.handle_checkboxes_for_import_options)
+        self.findHeader_checkBox.stateChanged.connect(self.handle_checkboxes_for_import_options)
+
+        # Plotting buttons
+        self.plotSelected2DXY_pushButton.clicked.connect(self.plot_selected_2D_XY)
+        self.plotMarked2DXY_pushButton.clicked.connect(self.plot_marked_2D_XY)
 
         # Create blank project to initialize self.current_data
         self.create_blank_project()
 
     def create_blank_project(self):
+        self.print_to_terminal("Let's Get Ready To Rumble!")
         self.current_project = {
-            "project_name": "",
-            "project_path": "",
+            "name": "",
+            "path": "",
             "preload": {
                 "reload_automatically": False,
                 "skip_rows": False,
@@ -64,8 +80,8 @@ class MainUI(QtWidgets.QMainWindow):
                 file_name += ".pkl"
             # A dict containing empty project
             self.current_project = {
-                "project_name": project_name,
-                "project_path": file_name,
+                "name": project_name,
+                "path": file_name,
                 "preload": {
                     "reload_automatically": False,
                     "skip_rows": False,
@@ -83,13 +99,12 @@ class MainUI(QtWidgets.QMainWindow):
                 "list_data": []
             }
             # Process the selected file_name
-            self.print_to_terminal(f"New project created: {project_name}, saved in {file_name}")
+            self.print_to_terminal(f"New project {project_name} created and saved in {file_name}")
             # Save data as pickle
             with open(file_name, 'wb') as file:
                 pickle.dump(self.current_project, file)
-            print("Data saved as pickle.")
             self.update_preload_options()
-            self.projectName_lineEdit.setText(self.current_project["project_name"])
+            self.projectName_lineEdit.setText(self.current_project["name"])
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
             print(self.current_project)
 
@@ -101,54 +116,52 @@ class MainUI(QtWidgets.QMainWindow):
         file_name, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Open Project", default_project_path,
                                                              "Project Files (*.pkl)", options=options)
         if file_name:
-            # Process the selected file_name
-            print("Opening project file:", file_name)
-
             # Load data from the .pkl file
             with open(file_name, 'rb') as file:
                 self.current_project = pickle.load(file)
 
+            self.print_to_terminal(f'Opening project {self.current_project["name"]} from {self.current_project["path"]}')
             # Process the loaded data (e.g., display, analyze, etc.)
-            print(f'Data loaded from project: {self.current_project["project_name"]}')
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
-            self.projectName_lineEdit.setText(self.current_project["project_name"])
+            self.projectName_lineEdit.setText(self.current_project["name"])
             self.update_preload_options()
             self.update_filelist()
+            # Selects the last item
+            self.filelist_listWidget.setCurrentRow(self.filelist_listWidget.count() - 1)
 
     def save_project(self):
         # gets preload options and updates current project dict
         self.preload_options_to_current_data()
         # Save data as pickle
-        with open(self.current_project["project_path"], 'wb') as file:
+        with open(self.current_project["path"], 'wb') as file:
             pickle.dump(self.current_project, file)
-        print("Data saved as pickle.")
+        self.print_to_terminal(f"Project {self.current_project['name']} saved in {self.current_project['path']}")
         self.update_preload_options()
         self.projectSize_textBrowser.setText(self.get_size(self.current_project))
 
     def save_project_as(self):
         options = QtWidgets.QFileDialog.Options()
         options |= QtWidgets.QFileDialog.DontUseNativeDialog
-        file_name, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save Project As...", "projects",
+        file_path, _ = QtWidgets.QFileDialog.getSaveFileName(None, "Save Project As...", "projects",
                                                              "Project Files (*.pkl);;All Files (*)", options=options)
-        if file_name:
+        if file_path:
             self.preload_options_to_current_data()
             # Append ".pkl" extension if not already present
-            if not file_name.endswith(".pkl"):
-                file_name += ".pkl"
-            self.current_project["project_path"] = file_name
-            self.current_project["project_name"] = os.path.splitext(os.path.basename(file_name))[0]
+            if not file_path.endswith(".pkl"):
+                file_path += ".pkl"
+            self.current_project["path"] = file_path
+            self.current_project["name"] = os.path.splitext(os.path.basename(file_path))[0]
             # Process the selected file_name
-            print("New project file created:", file_name)
+            self.print_to_terminal(f"Project {self.current_project['name']} saved as in {self.current_project['path']}")
             # Save data as pickle
-            with open(file_name, 'wb') as file:
+            with open(file_path, 'wb') as file:
                 pickle.dump(self.current_project, file)
-            print("Data saved as pickle.")
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
-            self.projectName_lineEdit.setText(self.current_project["project_name"])
+            self.projectName_lineEdit.setText(self.current_project["name"])
             self.update_preload_options()
 
     def import_raw_data(self):
-        print("Importing raw data...")
+        self.print_to_terminal("Importing raw data...")
         # Open a file dialog to select multiple files
         file_dialog = QtWidgets.QFileDialog()
         file_paths, _ = file_dialog.getOpenFileNames(None, "Select Files", "", "All Files (*)")
@@ -174,13 +187,50 @@ class MainUI(QtWidgets.QMainWindow):
 
     def update_variables_list(self, data):
         self.variables_listWidget.clear()
-        if isinstance(data, pd.DataFrame):
+        if self.check_panda(data):
             for variable in list(data.columns):
                 item = QtWidgets.QListWidgetItem()
                 item.setText(variable)
                 item.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
                 item.setCheckState(QtCore.Qt.Unchecked)
                 self.variables_listWidget.addItem(item)
+            self.update_plot_combo_boxes()
+
+
+    # Functions to remove variables
+    def rm_variables(self):
+        variables_indexes_to_remove = []
+        for index in range(self.variables_listWidget.count()):
+            item = self.variables_listWidget.item(index)
+            if item.checkState() == QtCore.Qt.Checked:
+                variables_indexes_to_remove.append(index)
+                item.setCheckState(QtCore.Qt.Unchecked)
+        print(variables_indexes_to_remove)
+        for index in variables_indexes_to_remove:
+            self.variables_listWidget.takeItem(index)
+        for data in self.current_project["list_data"]:
+            data['data'].drop(data['data'].columns[variables_indexes_to_remove], axis=1, inplace=True)
+            self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data['data']))
+        self.update_plot_combo_boxes()
+
+    def ok_variables(self):
+        variables_indexes_to_remove = []
+        for index in range(self.variables_listWidget.count()):
+            item = self.variables_listWidget.item(index)
+            if item.checkState() != QtCore.Qt.Checked:
+                variables_indexes_to_remove.append(index)
+        for index in reversed(variables_indexes_to_remove):
+            self.variables_listWidget.takeItem(index)
+        # Remove unchecked columns from each DataFrame in the list_data
+        for data in self.current_project["list_data"]:
+            unchecked_columns = [data['data'].columns[index] for index in variables_indexes_to_remove]
+            data['data'].drop(columns=unchecked_columns, inplace=True)
+            self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data['data']))
+        # Uncheck all items
+        for index in range(self.variables_listWidget.count()):
+            item = self.variables_listWidget.item(index)
+            item.setCheckState(QtCore.Qt.Unchecked)
+        self.update_plot_combo_boxes()
 
     def reload_all_data(self):
         self.preload_options_to_current_data()
@@ -238,8 +288,6 @@ class MainUI(QtWidgets.QMainWindow):
                 #print('\n'.join(data_from_header.split('\n')[:20]))
                 try:
                     dataframe = pd.read_csv(StringIO(data_from_header), encoding="ISO-8859-1", sep=delimiter)
-                    print(type(dataframe))
-                    print(dataframe.head())
                 except:
                     print('Could not make pandas DataFrame')
                     dataframe = data['data']
@@ -255,12 +303,16 @@ class MainUI(QtWidgets.QMainWindow):
             new_header = preload["add_header_text"]
             print(f"Adding header to the file: {new_header}")
 
+        self.check_panda(dataframe)
         return dataframe
 
     def handle_filelist_item_selection(self):
         selected_index = self.filelist_listWidget.currentRow()
-        self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(self.current_project["list_data"][selected_index]['data']))
-        self.check_panda(self.current_project["list_data"][selected_index]['data'])
+        selected_data = self.current_project["list_data"][selected_index]
+        self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(selected_data['data']))
+        self.filePath_textBrowser.setText(selected_data['path'])
+        self.fileSize_textBrowser.setText(self.get_size(selected_data['data']))
+        self.check_panda(selected_data['data'])
         self.update_variables_list(self.current_project["list_data"][selected_index]['data'])
 
     def update_preload_options(self):
@@ -276,6 +328,16 @@ class MainUI(QtWidgets.QMainWindow):
         self.addHeader_textEdit.setText(str(self.current_project["preload"]["add_header_text"]))
         self.decimalSeparator_textEdit.setText(str(self.current_project["preload"]["decimal_separator"]))
         self.delimiter_comboBox.setCurrentText(str(self.current_project["preload"]["delimiter"]))
+
+    def update_plot_combo_boxes(self):
+        selected_index = self.filelist_listWidget.currentRow()
+        selected_data = self.current_project["list_data"][selected_index]['data']
+        variables_list = selected_data.columns.tolist()
+        list_combo_boxes = [self.X2DXY_comboBox, self.Y2DXY_comboBox, self.X2DXYZ_comboBox, self.Y2DXYZ_comboBox, self.Z2DXYZ_comboBox, self.X3D_comboBox, self.Y3D_comboBox, self.Z3D_comboBox]
+        for combo_box in list_combo_boxes:
+            combo_box.clear()
+            for variable in variables_list:
+                combo_box.addItem(variable)
 
     def preload_options_to_current_data(self):
         preload = {
@@ -344,24 +406,35 @@ class MainUI(QtWidgets.QMainWindow):
         self.filelist_listWidget.clear()
         print(self.current_project['list_data'])
 
-    def get_size(self, dict):
-        size = len(dict)
-        size_bytes = size * 8
-        print(f'File size is: {size_bytes} B')
-        # Define suffixes for different sizes
-        suffixes = ['B', 'kB', 'MB', 'GB', 'TB']
-        # Find the appropriate suffix
-        suffix_index = 0
-        while size_bytes >= 1024 and suffix_index < len(suffixes) - 1:
-            size_bytes /= 1024
-            suffix_index += 1
-        # Return the size with the appropriate suffix
-        return "{:.2f} {}".format(size_bytes, suffixes[suffix_index])
+    def get_size(self, sth):
+        # Calculate size of self.current_data (from path), or pandas DataFrame or plain string.
+        def format_bytes(size_bytes):
+            # Define suffixes for different sizes
+            suffixes = ['B', 'kB', 'MB', 'GB', 'TB']
+            suffix_index = 0
+            while size_bytes >= 1024 and suffix_index < len(suffixes) - 1:
+                size_bytes /= 1024
+                suffix_index += 1
+            # Return the size with the appropriate suffix
+            return "{:.2f} {}".format(size_bytes, suffixes[suffix_index])
+
+        if isinstance(sth, dict):
+            print(sth['path'])
+            sth_size = os.path.getsize(sth['path'])
+        elif isinstance(sth, pd.DataFrame):
+            sth_size = sth.memory_usage(deep=True).sum()
+        elif isinstance(sth, str):
+            sth_size = sys.getsizeof(sth)
+        else:
+            print('Some wrong format in get_size() function')
+            sth_size = 0
+
+        return format_bytes(sth_size)
 
     def df_to_text_or_add_line_numbers(self, text):
         # Checks if data is already pandas dataframe
-        if isinstance(text, pd.DataFrame):
-            text = text.head(100).to_csv(index=True, header=True, sep='\t')
+        if self.check_panda(text):
+            text = text.head(100).to_csv(index=True, header=True, sep='\t', index_label=False)
             #numbered_lines
             return text
         else:
@@ -374,18 +447,69 @@ class MainUI(QtWidgets.QMainWindow):
     def print_to_terminal(self, text):
         # Get the current date and time and format it
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M")
-        #self.terminal_textBrowser.setText(" HELLO ! ")
-        #self.terminal_textBrowser.append(f'{current_datetime} {text}')
         formatted_text = f'<span style="color: blue;"><b>{current_datetime}</b></span> {text}'
         self.terminal_textBrowser.append(formatted_text)
 
+    def handle_checkboxes_for_import_options(self, state):
+        checkboxes = [self.skipNRows_checkBox, self.definedIn_checkBox, self.findHeader_checkBox]
+        if state == 2:  # If the checkbox is checked
+            sender = self.sender()
+            for checkbox in checkboxes:
+                 checkbox.setChecked(checkbox is sender)
+
     def check_panda(self, text):
         if isinstance(text, pd.DataFrame):
-            pixmap = QtGui.QPixmap("icons/panda.png")
+            print(f'panda got {type(text)}')
+            if text.columns[0].isnumeric():
+                print('Your dataframe needs header. Use "add header" option.')
+                pixmap = QtGui.QPixmap("icons/panda_headless.png")
+            else:
+                print("All good, panda is happy!")
+                pixmap = QtGui.QPixmap("icons/panda.png")
             self.panda_label.setPixmap(pixmap)
             self.panda_label.setScaledContents(True)
+            return True
         else:
             self.panda_label.clear()
+            return False
+
+    def plot_selected_2D_XY(self):
+        selected_index = self.filelist_listWidget.currentRow()
+        selected_data = self.current_project["list_data"][selected_index]
+        x = self.X2DXY_comboBox.currentText()
+        y = self.Y2DXY_comboBox.currentText()
+        try:
+            plt.plot(selected_data['data'][x], selected_data['data'][y])
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.title(selected_data['name'])
+            plt.grid(True)
+            plt.show()
+        except:
+            self.print_to_terminal('Something is wrong with the format of your variables :(')
+
+    def plot_marked_2D_XY(self):
+        data_to_plot = []
+        x = self.X2DXY_comboBox.currentText()
+        y = self.Y2DXY_comboBox.currentText()
+        try:
+            for index in range(self.filelist_listWidget.count()):
+                item = self.filelist_listWidget.item(index)
+                current_state = item.checkState()
+                if current_state == QtCore.Qt.Checked:
+                    data_to_plot.append(index)
+            for index in data_to_plot:
+                data = self.current_project["list_data"][index]
+                plt.plot(data['data'][x], data['data'][y], label=data['name'])
+            plt.xlabel(x)
+            plt.ylabel(y)
+            plt.legend()
+            # plt.title(data['name'])
+            plt.grid(True)
+            plt.show()
+        except:
+            self.print_to_terminal('Something is wrong with the format of your variables :(')
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
