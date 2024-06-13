@@ -106,6 +106,7 @@ class MainUI(QtWidgets.QMainWindow):
             self.update_preload_options()
             self.projectName_lineEdit.setText(self.current_project["name"])
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
+            self.preview_textBrowser.clear()
             print(self.current_project)
 
     def open_project(self):
@@ -164,7 +165,7 @@ class MainUI(QtWidgets.QMainWindow):
         self.print_to_terminal("Importing raw data...")
         # Open a file dialog to select multiple files
         file_dialog = QtWidgets.QFileDialog()
-        file_paths, _ = file_dialog.getOpenFileNames(None, "Select Files", "", "All Files (*)")
+        file_paths, _ = file_dialog.getOpenFileNames(None, "Select Files", "data_examples", "All Files (*)")
         if file_paths:
             # Add each file to the list widget
             for file_path in file_paths:
@@ -175,6 +176,7 @@ class MainUI(QtWidgets.QMainWindow):
                 if self.current_project["preload"]["reload_automatically"]:
                     self.data_to_dataframe()
             self.update_filelist()
+        self.filelist_listWidget.setCurrentRow(self.filelist_listWidget.count() - 1)
 
     def update_filelist(self):
         self.filelist_listWidget.clear()
@@ -195,7 +197,6 @@ class MainUI(QtWidgets.QMainWindow):
                 item.setCheckState(QtCore.Qt.Unchecked)
                 self.variables_listWidget.addItem(item)
             self.update_plot_combo_boxes()
-
 
     # Functions to remove variables
     def rm_variables(self):
@@ -235,7 +236,8 @@ class MainUI(QtWidgets.QMainWindow):
     def reload_all_data(self):
         self.preload_options_to_current_data()
         for data in self.current_project["list_data"]:
-            data["data"] = self.reload_data(data)
+            data["data"] = self.data_to_dataframe(data)
+        self.update_plot_combo_boxes()
 
     def reload_marked_data(self):
         self.preload_options_to_current_data()
@@ -247,22 +249,26 @@ class MainUI(QtWidgets.QMainWindow):
                 data_to_reload.append(index)
             item.setCheckState(QtCore.Qt.Unchecked)
         for index in data_to_reload:
-            self.current_project["list_data"][index]["data"] = self.reload_data(self.current_project["list_data"][index])
+            self.current_project["list_data"][index]["data"] = self.data_to_dataframe(self.current_project["list_data"][index])
+        self.update_plot_combo_boxes()
 
     def data_preview(self):
         # Function just to preview loading data. Does not overwrite anything
         self.preload_options_to_current_data()
         selected_index = self.filelist_listWidget.currentRow()
-        data_to_show = self.reload_data(self.current_project["list_data"][selected_index])
-        if selected_index:
-            self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data_to_show))
-            self.check_panda(data_to_show)
+        data_to_show = self.data_to_dataframe(self.current_project["list_data"][selected_index])
+        self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data_to_show))
+        self.check_panda(data_to_show)
+        self.update_variables_list(data_to_show)
 
-    def reload_data(self, data):
+    def data_to_dataframe(self, data):
         preload = self.current_project["preload"]
         decimal_separator = preload["decimal_separator"]
         if preload["delimiter"] == "Tab":
             delimiter = '\t'
+        elif preload['delimiter'] == "Space":
+            delimiter = " "
+            print("delimiter is space")
         else:
             delimiter = '\t'
 
@@ -272,7 +278,6 @@ class MainUI(QtWidgets.QMainWindow):
             try:
                 # Attempt to load the data as pandas DataFrame
                 dataframe = pd.read_csv(data['path'], encoding="ISO-8859-1", skiprows=int(n_rows_to_skip), sep=delimiter)
-                #self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(dataframe))
             except:
                 print(f'I could not make pandas DafaFrame. I just cut your data by {n_rows_to_skip} rows')
                 dataframe = data['data'].split('\n',int(preload["skip_rows_number"]))[-1]
@@ -285,7 +290,6 @@ class MainUI(QtWidgets.QMainWindow):
             # Try to find and split the data based on the phrase
             if phrase in data['data']:
                 data_from_header = phrase + '\n'.join(data['data'].split(phrase)[1:])
-                #print('\n'.join(data_from_header.split('\n')[:20]))
                 try:
                     dataframe = pd.read_csv(StringIO(data_from_header), encoding="ISO-8859-1", sep=delimiter)
                 except:
@@ -299,11 +303,17 @@ class MainUI(QtWidgets.QMainWindow):
             defined_in_row = preload["defined_in_row"]
             defined_in_column = preload["defined_in_column"]
 
+        else:
+            print('ELSE!')
+            dataframe = pd.read_csv(data['path'], encoding="ISO-8859-1", delim_whitespace=True)
+            # dataframe = pd.DataFrame({'Name': ['John', 'Alice', 'Bob'], 'Age': [25, 30, 35], 'City': ['New York', 'Los Angeles', 'Chicago']})
+
         if preload["add_header"] == True:
             new_header = preload["add_header_text"]
             print(f"Adding header to the file: {new_header}")
 
         self.check_panda(dataframe)
+        print(dataframe.columns)
         return dataframe
 
     def handle_filelist_item_selection(self):
@@ -459,12 +469,11 @@ class MainUI(QtWidgets.QMainWindow):
 
     def check_panda(self, text):
         if isinstance(text, pd.DataFrame):
-            print(f'panda got {type(text)}')
             if text.columns[0].isnumeric():
-                print('Your dataframe needs header. Use "add header" option.')
+                self.print_to_terminal('Your dataframe needs header. Use "add header" option.')
                 pixmap = QtGui.QPixmap("icons/panda_headless.png")
             else:
-                print("All good, panda is happy!")
+                self.print_to_terminal("All good, panda is happy!")
                 pixmap = QtGui.QPixmap("icons/panda.png")
             self.panda_label.setPixmap(pixmap)
             self.panda_label.setScaledContents(True)
