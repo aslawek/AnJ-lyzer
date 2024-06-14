@@ -8,8 +8,8 @@ import os
 from io import StringIO
 import pickle
 from datetime import datetime
-#matplotlib.use('TkAgg')
-#matplotlib.use('Qt5Agg')
+
+from operations.uv_vis import uv_vis_UV_VIS
 
 class MainUI(QtWidgets.QMainWindow):
     def __init__(self):
@@ -22,9 +22,48 @@ class MainUI(QtWidgets.QMainWindow):
         self.openProject_pushButton.clicked.connect(self.open_project)
         self.filelist_listWidget.itemSelectionChanged.connect(self.handle_filelist_item_selection)
 
+        # Operation buttons
+        self.addOperation_pushButton.clicked.connect(self.add_operation)
+        self.goSelected_pushButton.clicked.connect(self.go_operation_selected)
+        self.goMarked_pushButton.clicked.connect(self.go_operation_marked)
+
         # Create blank project to initialize self.current_data
         self.create_blank_project()
 
+    def add_operation(self):
+        # Clear any existing layout in the operations_frame
+        for i in reversed(range(self.operations_frame.layout().count())):
+            widget_to_remove = self.operations_frame.layout().itemAt(i).widget()
+            self.operations_frame.layout().removeWidget(widget_to_remove)
+            widget_to_remove.setParent(None)
+
+        # Call the function to create the widget with buttons and add it to operations_frame
+        uv_vis_widget = uv_vis_UV_VIS(self.operations_frame)
+        uv_vis_layout = QtWidgets.QVBoxLayout(self.operations_frame)
+        uv_vis_layout.addWidget(uv_vis_widget)
+
+
+
+    def add_widget_to_operations_frame(self):
+        # Clear any existing layout in the operations_frame
+        for i in reversed(range(self.operations_frame.layout().count())):
+            widget_to_remove = self.operations_frame.layout().itemAt(i).widget()
+            self.operations_frame.layout().removeWidget(widget_to_remove)
+            widget_to_remove.setParent(None)
+
+        # Call the function to create the widget with buttons and add it to operations_frame
+        uv_vis_widget = uv_vis_UV_VIS(self.operations_frame)
+        uv_vis_layout = QtWidgets.QVBoxLayout(self.operations_frame)
+        uv_vis_layout.addWidget(uv_vis_widget)
+
+    def rm_operation(self):
+        print('RM!')
+
+    def go_operation_selected(self):
+        print('Clicked')
+
+    def go_operation_marked(self):
+        print('Clicked')
 
     def create_blank_project(self):
         self.print_to_terminal("Let's Get Ready To Rumble!")
@@ -105,7 +144,7 @@ class MainUI(QtWidgets.QMainWindow):
             # Process the loaded data (e.g., display, analyze, etc.)
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
             self.projectName_lineEdit.setText(self.current_project["name"])
-            self.update_preload_options()
+            #self.update_preload_options()
             self.update_filelist()
             # Selects the last item
             self.filelist_listWidget.setCurrentRow(self.filelist_listWidget.count() - 1)
@@ -165,18 +204,6 @@ class MainUI(QtWidgets.QMainWindow):
             item.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
             item.setCheckState(QtCore.Qt.Unchecked)
             self.filelist_listWidget.addItem(item)
-
-    def update_variables_list(self, data):
-        self.variables_listWidget.clear()
-        if self.check_panda(data):
-            for variable in list(data.columns):
-                item = QtWidgets.QListWidgetItem()
-                item.setText(variable)
-                item.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
-                item.setCheckState(QtCore.Qt.Unchecked)
-                self.variables_listWidget.addItem(item)
-            self.update_plot_combo_boxes()
-
 
     # Functions to remove variables
     def rm_variables(self):
@@ -297,21 +324,7 @@ class MainUI(QtWidgets.QMainWindow):
         self.filePath_textBrowser.setText(selected_data['path'])
         self.fileSize_textBrowser.setText(self.get_size(selected_data['data']))
         self.check_panda(selected_data['data'])
-        self.update_variables_list(self.current_project["list_data"][selected_index]['data'])
-
-    def update_preload_options(self):
-        self.reloadAutomatically_checkBox.setChecked(self.current_project["preload"]["reload_automatically"])
-        self.skipNRows_checkBox.setChecked(self.current_project["preload"]["skip_rows"])
-        self.skipNRows_textEdit.setText(str(self.current_project["preload"]["skip_rows_number"]))
-        self.findHeader_checkBox.setChecked(self.current_project["preload"]["find_header"])
-        self.findHeader_textEdit.setText(str(self.current_project["preload"]["find_header_phrase"]))
-        self.definedIn_checkBox.setChecked(self.current_project["preload"]["defined_in"])
-        self.rowDefinedIn_textEdit.setText(str(self.current_project["preload"]["defined_in_row"]))
-        self.columnDefinedIn_textEdit.setText(str(self.current_project["preload"]["defined_in_column"]))
-        self.addHeader_checkBox.setChecked(self.current_project["preload"]["add_header"])
-        self.addHeader_textEdit.setText(str(self.current_project["preload"]["add_header_text"]))
-        self.decimalSeparator_textEdit.setText(str(self.current_project["preload"]["decimal_separator"]))
-        self.delimiter_comboBox.setCurrentText(str(self.current_project["preload"]["delimiter"]))
+        #self.update_variables_list(self.current_project["list_data"][selected_index]['data'])
 
     def update_plot_combo_boxes(self):
         selected_index = self.filelist_listWidget.currentRow()
@@ -388,7 +401,6 @@ class MainUI(QtWidgets.QMainWindow):
     def clear_all_fileList(self):
         self.current_project['list_data'] = []
         self.filelist_listWidget.clear()
-        print(self.current_project['list_data'])
 
     def get_size(self, sth):
         # Calculate size of self.current_data (from path), or pandas DataFrame or plain string.
@@ -434,27 +446,20 @@ class MainUI(QtWidgets.QMainWindow):
         formatted_text = f'<span style="color: blue;"><b>{current_datetime}</b></span> {text}'
         self.terminal_textBrowser.append(formatted_text)
 
-    def handle_checkboxes_for_import_options(self, state):
-        checkboxes = [self.skipNRows_checkBox, self.definedIn_checkBox, self.findHeader_checkBox]
-        if state == 2:  # If the checkbox is checked
-            sender = self.sender()
-            for checkbox in checkboxes:
-                 checkbox.setChecked(checkbox is sender)
-
     def check_panda(self, text):
         if isinstance(text, pd.DataFrame):
             print(f'panda got {type(text)}')
-            if text.columns[0].isnumeric():
-                print('Your dataframe needs header. Use "add header" option.')
-                pixmap = QtGui.QPixmap("icons/panda_headless.png")
-            else:
-                print("All good, panda is happy!")
-                pixmap = QtGui.QPixmap("icons/panda.png")
-            self.panda_label.setPixmap(pixmap)
-            self.panda_label.setScaledContents(True)
+            #if text.columns[0].isnumeric():
+                #print('Your dataframe needs header. Use "add header" option.')
+                #pixmap = QtGui.QPixmap("icons/panda_headless.png")
+            #else:
+                #print("All good, panda is happy!")
+                #pixmap = QtGui.QPixmap("icons/panda.png")
+            #self.panda_label.setPixmap(pixmap)
+            #self.panda_label.setScaledContents(True)
             return True
         else:
-            self.panda_label.clear()
+            #self.panda_label.clear()
             return False
 
     def plot_selected_2D_XY(self):

@@ -46,7 +46,7 @@ class MainUI(QtWidgets.QMainWindow):
         self.create_blank_project()
 
     def create_blank_project(self):
-        self.print_to_terminal("Let's Get Ready To Rumble!")
+        self.print_to_terminal("Let's Get Ready To Rumble!", 'green')
         self.current_project = {
             "name": "",
             "path": "",
@@ -64,7 +64,13 @@ class MainUI(QtWidgets.QMainWindow):
                 "decimal_separator": ".",
                 "delimiter": "Tab"
             },
-            "list_data": []
+            "list_data": [
+                {
+                    'name': "",
+                    'path': "",
+                    "data": ""
+                }
+            ]
         }
 
     def new_project(self):
@@ -107,7 +113,6 @@ class MainUI(QtWidgets.QMainWindow):
             self.projectName_lineEdit.setText(self.current_project["name"])
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
             self.preview_textBrowser.clear()
-            print(self.current_project)
 
     def open_project(self):
         default_project_path = os.path.join(os.path.dirname(__file__), "projects")
@@ -172,9 +177,14 @@ class MainUI(QtWidgets.QMainWindow):
                 data_name = os.path.splitext(os.path.basename(file_path))[0]
                 with open(file_path, 'r') as file:
                     data = file.read()
-                self.current_project["list_data"].append({"name": data_name, "path": file_path, "data": data})
+
                 if self.current_project["preload"]["reload_automatically"]:
-                    self.data_to_dataframe()
+                    data = self.data_to_dataframe(data)
+                    if self.check_panda(data):
+                        self.update_plot_combo_boxes()
+
+                # Appends data (or dataframe) to list_data
+                self.current_project["list_data"].append({"name": data_name, "path": file_path, "data": data})
             self.update_filelist()
         self.filelist_listWidget.setCurrentRow(self.filelist_listWidget.count() - 1)
 
@@ -206,12 +216,12 @@ class MainUI(QtWidgets.QMainWindow):
             if item.checkState() == QtCore.Qt.Checked:
                 variables_indexes_to_remove.append(index)
                 item.setCheckState(QtCore.Qt.Unchecked)
-        print(variables_indexes_to_remove)
         for index in variables_indexes_to_remove:
             self.variables_listWidget.takeItem(index)
         for data in self.current_project["list_data"]:
             data['data'].drop(data['data'].columns[variables_indexes_to_remove], axis=1, inplace=True)
             self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data['data']))
+        self.print_to_terminal(f"Removed variables: {variables_indexes_to_remove}")
         self.update_plot_combo_boxes()
 
     def ok_variables(self):
@@ -231,6 +241,7 @@ class MainUI(QtWidgets.QMainWindow):
         for index in range(self.variables_listWidget.count()):
             item = self.variables_listWidget.item(index)
             item.setCheckState(QtCore.Qt.Unchecked)
+        self.print_to_terminal(f"Preserved variables: {variables_indexes_to_remove}")
         self.update_plot_combo_boxes()
 
     def reload_all_data(self):
@@ -256,47 +267,47 @@ class MainUI(QtWidgets.QMainWindow):
         # Function just to preview loading data. Does not overwrite anything
         self.preload_options_to_current_data()
         selected_index = self.filelist_listWidget.currentRow()
-        data_to_show = self.data_to_dataframe(self.current_project["list_data"][selected_index])
-        self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data_to_show))
-        self.check_panda(data_to_show)
-        self.update_variables_list(data_to_show)
+        dataframe_to_show = self.data_to_dataframe(self.current_project["list_data"][selected_index])
+        self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(dataframe_to_show))
+        self.update_variables_list(dataframe_to_show)
+        self.check_panda(dataframe_to_show)
 
     def data_to_dataframe(self, data):
+        dataframe = ""
         preload = self.current_project["preload"]
         decimal_separator = preload["decimal_separator"]
         if preload["delimiter"] == "Tab":
             delimiter = '\t'
         elif preload['delimiter'] == "Space":
             delimiter = " "
-            print("delimiter is space")
         else:
             delimiter = '\t'
 
         if preload['skip_rows'] == True:
             n_rows_to_skip = preload["skip_rows_number"]
-            print(f'Loading data, skipping {n_rows_to_skip} rows')
             try:
                 # Attempt to load the data as pandas DataFrame
                 dataframe = pd.read_csv(data['path'], encoding="ISO-8859-1", skiprows=int(n_rows_to_skip), sep=delimiter)
+                self.print_to_terminal(f'Loading data {data["name"]} as pd.dataframe, skipping {n_rows_to_skip} rows')
             except:
-                print(f'I could not make pandas DafaFrame. I just cut your data by {n_rows_to_skip} rows')
+                self.print_to_terminal(f'Loading data {data["name"]} as plain text, skipping {n_rows_to_skip} rows')
                 dataframe = data['data'].split('\n',int(preload["skip_rows_number"]))[-1]
                 self.preview_textBrowser.setText(self.df_to_text_or_add_line_numbers(data['data'].split('\n', int(preload["skip_rows_number"]))[-1]))
 
         elif preload["find_header"] == True:
             phrase = preload["find_header_phrase"]
-            print(f'Looking for the phrase "{phrase}" included in header')
 
             # Try to find and split the data based on the phrase
             if phrase in data['data']:
+                self.print_to_terminal(f'Loading data {data["name"]} as pd.dataframe, found header {phrase}!')
                 data_from_header = phrase + '\n'.join(data['data'].split(phrase)[1:])
                 try:
                     dataframe = pd.read_csv(StringIO(data_from_header), encoding="ISO-8859-1", sep=delimiter)
                 except:
-                    print('Could not make pandas DataFrame')
+                    self.print_to_terminal(f'Loading data {data["name"]} as plain text, found header {phrase}!', "orange")
                     dataframe = data['data']
             else:
-                print(f"Phrase {phrase} not found :(")
+                self.print_to_terminal(f"Phrase {phrase} not found :(", "red")
                 dataframe = data['data']
 
         elif preload["defined_in"] == True:
@@ -304,16 +315,18 @@ class MainUI(QtWidgets.QMainWindow):
             defined_in_column = preload["defined_in_column"]
 
         else:
-            print('ELSE!')
-            dataframe = pd.read_csv(data['path'], encoding="ISO-8859-1", delim_whitespace=True)
-            # dataframe = pd.DataFrame({'Name': ['John', 'Alice', 'Bob'], 'Age': [25, 30, 35], 'City': ['New York', 'Los Angeles', 'Chicago']})
+            try:
+                dataframe = pd.read_csv(data['path'], encoding="ISO-8859-1", delim_whitespace=True)
+                self.print_to_terminal(f"No preload options found, loaded plain pandas dataframe")
+            except:
+                self.print_to_terminal(f"No preload options found, loaded plain data")
+                dataframe = data['data']
+
 
         if preload["add_header"] == True:
             new_header = preload["add_header_text"]
             print(f"Adding header to the file: {new_header}")
 
-        self.check_panda(dataframe)
-        print(dataframe.columns)
         return dataframe
 
     def handle_filelist_item_selection(self):
@@ -342,12 +355,14 @@ class MainUI(QtWidgets.QMainWindow):
     def update_plot_combo_boxes(self):
         selected_index = self.filelist_listWidget.currentRow()
         selected_data = self.current_project["list_data"][selected_index]['data']
-        variables_list = selected_data.columns.tolist()
-        list_combo_boxes = [self.X2DXY_comboBox, self.Y2DXY_comboBox, self.X2DXYZ_comboBox, self.Y2DXYZ_comboBox, self.Z2DXYZ_comboBox, self.X3D_comboBox, self.Y3D_comboBox, self.Z3D_comboBox]
-        for combo_box in list_combo_boxes:
-            combo_box.clear()
-            for variable in variables_list:
-                combo_box.addItem(variable)
+        if self.check_panda(selected_data):
+            variables_list = selected_data.columns.tolist()
+            list_combo_boxes = [self.X2DXY_comboBox, self.Y2DXY_comboBox, self.X2DXYZ_comboBox, self.Y2DXYZ_comboBox,
+                                self.Z2DXYZ_comboBox, self.X3D_comboBox, self.Y3D_comboBox, self.Z3D_comboBox]
+            for combo_box in list_combo_boxes:
+                combo_box.clear()
+                for variable in variables_list:
+                    combo_box.addItem(variable)
 
     def preload_options_to_current_data(self):
         preload = {
@@ -441,23 +456,23 @@ class MainUI(QtWidgets.QMainWindow):
 
         return format_bytes(sth_size)
 
-    def df_to_text_or_add_line_numbers(self, text):
+    def df_to_text_or_add_line_numbers(self, data):
         # Checks if data is already pandas dataframe
-        if self.check_panda(text):
-            text = text.head(100).to_csv(index=True, header=True, sep='\t', index_label=False)
+        if self.check_panda(data):
+            text = data.head(100).to_csv(index=True, header=True, sep='\t', index_label=False)
             #numbered_lines
             return text
         else:
             # Modifies plain data, gets first 100 lines, adds number of line
-            lines = text.split('\n')[:100]  # Limit to the first 100 lines
+            lines = data.split('\n')[:100]  # Limit to the first 100 lines
             numbered_lines = [f'<font color="red">{i + 1}:</font>\t{line}' for i, line in enumerate(lines)]
             numbered_text = '<br>'.join(numbered_lines)
             return numbered_text
 
-    def print_to_terminal(self, text):
+    def print_to_terminal(self, text, colour="black"):
         # Get the current date and time and format it
         current_datetime = datetime.now().strftime("%Y-%m-%d %H:%M")
-        formatted_text = f'<span style="color: blue;"><b>{current_datetime}</b></span> {text}'
+        formatted_text = f'<span style="color: blue;"><b>{current_datetime}</b></span> <span style="color: {colour}">{text}</span>'
         self.terminal_textBrowser.append(formatted_text)
 
     def handle_checkboxes_for_import_options(self, state):
@@ -470,10 +485,8 @@ class MainUI(QtWidgets.QMainWindow):
     def check_panda(self, text):
         if isinstance(text, pd.DataFrame):
             if text.columns[0].isnumeric():
-                self.print_to_terminal('Your dataframe needs header. Use "add header" option.')
                 pixmap = QtGui.QPixmap("icons/panda_headless.png")
             else:
-                self.print_to_terminal("All good, panda is happy!")
                 pixmap = QtGui.QPixmap("icons/panda.png")
             self.panda_label.setPixmap(pixmap)
             self.panda_label.setScaledContents(True)
@@ -495,7 +508,7 @@ class MainUI(QtWidgets.QMainWindow):
             plt.grid(True)
             plt.show()
         except:
-            self.print_to_terminal('Something is wrong with the format of your variables :(')
+            self.print_to_terminal('Something is wrong with the format of your variables :(', 'red')
 
     def plot_marked_2D_XY(self):
         data_to_plot = []
@@ -517,7 +530,7 @@ class MainUI(QtWidgets.QMainWindow):
             plt.grid(True)
             plt.show()
         except:
-            self.print_to_terminal('Something is wrong with the format of your variables :(')
+            self.print_to_terminal('Something is wrong with the format of your variables :(', 'red')
 
 
 if __name__ == "__main__":
