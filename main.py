@@ -8,14 +8,18 @@ import os
 from io import StringIO
 import pickle
 from datetime import datetime
+
+from functions.operations_dialog import OperationsDialog
+
 #matplotlib.use('TkAgg')
 #matplotlib.use('Qt5Agg')
+
 
 class MainUI(QtWidgets.QMainWindow):
     def __init__(self):
         super(MainUI, self).__init__()
 
-        loadUi("mainui.ui", self)
+        loadUi("./ui/mainui.ui", self)
         self.newProject_pushButton.clicked.connect(self.new_project)
         self.saveProject_pushButton.clicked.connect(self.save_project)
         self.saveAsProject_pushButton.clicked.connect(self.save_project_as)
@@ -32,6 +36,11 @@ class MainUI(QtWidgets.QMainWindow):
         self.previewHeader_pushButton.clicked.connect(self.data_preview)
         self.okVariables_pushButton.clicked.connect(self.ok_variables)
         self.removeVariables_pushButton.clicked.connect(self.rm_variables)
+
+        # Operations
+        self.addOperation_pushButton.clicked.connect(self.add_operation)
+        #self.operations_dialog = OperationsDialog(self)
+        #self.operations_dialog.accepted.connect(self.update_operations)
 
         # To handle that only one checkbox is checked
         self.skipNRows_checkBox.stateChanged.connect(self.handle_checkboxes_for_import_options)
@@ -70,7 +79,8 @@ class MainUI(QtWidgets.QMainWindow):
                     'path': "",
                     "data": ""
                 }
-            ]
+            ],
+            "list_operations": []
         }
 
     def new_project(self):
@@ -113,6 +123,29 @@ class MainUI(QtWidgets.QMainWindow):
             self.projectName_lineEdit.setText(self.current_project["name"])
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
             self.preview_textBrowser.clear()
+
+    def add_operation(self):
+
+        # self.operations_dialog = OperationsDialog(self)
+        # self.operations_dialog.accepted.connect(self.update_operations)
+        # self.operations_dialog = OperationsDialog(self.current_project['list_operations'], self)
+        self.operations_dialog = OperationsDialog(['a', 'b', 'c'], self)
+        self.operations_dialog.accepted.connect(self.update_operations)
+
+        # Passes list_operations to OperationsDialog
+        #if not self.operations_dialog:
+            #self.operations_dialog = OperationsDialog(self)
+            # self.operations_dialog.accepted.connect(self.update_operations)
+            #self.operations_dialog = OperationsDialog(self.current_project['list_operations'], self)
+            #self.operations_dialog = OperationsDialog(['a', 'b', 'c'], self)
+            #self.operations_dialog.accepted.connect(self.update_operations)
+        self.operations_dialog.exec_()  # Show the dialog modally
+
+    def update_operations(self, list_operations):
+        # Update list_operations when accepted signal is emitted
+        print("Updated operations:", list_operations)
+        self.current_project['list_operations'] = list_operations
+
 
     def open_project(self):
         default_project_path = os.path.join(os.path.dirname(__file__), "projects")
