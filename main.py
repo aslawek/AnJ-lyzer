@@ -10,6 +10,7 @@ import pickle
 from datetime import datetime
 
 from functions.operations_dialog import OperationsDialog
+from operations.filters.filter_by_range_2 import FilterByRange
 
 #matplotlib.use('TkAgg')
 #matplotlib.use('Qt5Agg')
@@ -38,7 +39,7 @@ class MainUI(QtWidgets.QMainWindow):
         self.removeVariables_pushButton.clicked.connect(self.rm_variables)
 
         # Operations
-        self.addOperation_pushButton.clicked.connect(self.add_operation)
+        self.addOperation_pushButton.clicked.connect(self.manage_operations)
         #self.operations_dialog = OperationsDialog(self)
         #self.operations_dialog.accepted.connect(self.update_operations)
 
@@ -124,12 +125,28 @@ class MainUI(QtWidgets.QMainWindow):
             self.projectSize_textBrowser.setText(self.get_size(self.current_project))
             self.preview_textBrowser.clear()
 
-    def add_operation(self):
+    def manage_operations(self):
+        filter_widget = FilterByRange(self.operations_scrollArea)
+        filter_widget.show()  # Make sure the label is visible
 
-        # self.operations_dialog = OperationsDialog(self)
-        # self.operations_dialog.accepted.connect(self.update_operations)
-        # self.operations_dialog = OperationsDialog(self.current_project['list_operations'], self)
-        self.operations_dialog = OperationsDialog(['a', 'b', 'c'], self)
+        #filter_widget.setGeometry(0, 0, self.operations_scrollArea.width(), 30)  # Example: full width, 30px height
+
+        self.current_project['list_operations'] = [
+            {
+                "name": "raz",
+                "path": "D:aaa"
+            },
+            {
+                "name": "dwa",
+                "path": "C:bbb"
+            },
+            {
+                "name": "tri",
+                "path": "C:bbb"
+            },
+        ]
+        #self.operations_dialog = OperationsDialog(['a', 'b', 'c'], self)
+        self.operations_dialog = OperationsDialog(self.current_project['list_operations'], self)
         self.operations_dialog.accepted.connect(self.update_operations)
 
         # Passes list_operations to OperationsDialog
@@ -139,7 +156,9 @@ class MainUI(QtWidgets.QMainWindow):
             #self.operations_dialog = OperationsDialog(self.current_project['list_operations'], self)
             #self.operations_dialog = OperationsDialog(['a', 'b', 'c'], self)
             #self.operations_dialog.accepted.connect(self.update_operations)
-        self.operations_dialog.exec_()  # Show the dialog modally
+
+        ## This worked:
+        #self.operations_dialog.exec_()  # Show the dialog modally
 
     def update_operations(self, list_operations):
         # Update list_operations when accepted signal is emitted

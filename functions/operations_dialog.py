@@ -41,7 +41,7 @@ class OperationsDialog(QDialog):
         self.operations_listWidget.clear()
         for operation in list_operations:
             item = QListWidgetItem()
-            item.setText(operation)
+            item.setText(operation['name'])
             item.setFlags(QtCore.Qt.ItemIsUserCheckable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable)
             item.setCheckState(QtCore.Qt.Unchecked)
             self.operations_listWidget.addItem(item)
@@ -66,7 +66,9 @@ class OperationsDialog(QDialog):
             item.setCheckState(QtCore.Qt.Unchecked)
             self.operations_listWidget.addItem(item)
 
-            self.list_operations.append(item)
+            #self.list_operations.append(item)
+            self.list_operations.append({'name': item_name,
+                                         'path': item_path})
 
     def accept(self):
         # Handle OK button click
